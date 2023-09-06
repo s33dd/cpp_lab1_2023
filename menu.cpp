@@ -19,10 +19,7 @@ Answer Menu::ModularTestsAsk(void) {
 	std::cout << "Do you want to perform tests?" << std::endl;
 	std::cout << "1 - Yes / 0 - No :";
 	Answer choice = static_cast<Answer>(GetInput<int>());
-	while (!isAnswerCorrect(choice)) {
-		choice = static_cast<Answer>(GetInput<int>());
-	}
-	return choice;
+	return Ask();
 }
 
 InputType Menu::InputAsk(void) {
@@ -39,35 +36,30 @@ Answer Menu::SaveInputAsk(void) {
 	std::cout << "Do you want to save input data in file?" << std::endl;
 	std::cout << "1 - Yes / 0 - No :";
 	Answer choice = static_cast<Answer>(GetInput<int>());
-	while (!isAnswerCorrect(choice)) {
-		choice = static_cast<Answer>(GetInput<int>());
-	}
-	return choice;
+	return Ask();
 }
 
 Answer Menu::OutputFileAsk(void) {
 	std::cout << "Do you want to save output data in file?" << std::endl;
 	std::cout << "1 - Yes / 0 - No :";
 	Answer choice = static_cast<Answer>(GetInput<int>());
-	while (!isAnswerCorrect(choice)) {
-		choice = static_cast<Answer>(GetInput<int>());
-	}
-	return choice;
+	return Ask();
 }
 
 Answer Menu::RewriteAsk(std::string path) {
 	std::cout << "Do you want to rewrite file?" << std::endl;
 	std::cout << "1 - Yes / 0 - No :";
 	Answer choice = static_cast<Answer>(GetInput<int>());
-	while (!isAnswerCorrect(choice)) {
-		choice = static_cast<Answer>(GetInput<int>());
-	}
-	return choice;
+	return Ask();
 }
 
 Answer Menu::RepeatAsk(void) {
 	std::cout << "Do you want to exit the program?" << std::endl;
 	std::cout << "1 - Yes / 0 - No :";
+	return Ask();
+}
+
+Answer Menu::Ask(void) {
 	Answer choice = static_cast<Answer>(GetInput<int>());
 	while (!isAnswerCorrect(choice)) {
 		choice = static_cast<Answer>(GetInput<int>());

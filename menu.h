@@ -17,7 +17,7 @@ public:
 	~Menu();
 
 	template <typename ElementType>
-	ElementType GetInput(void) {
+	static ElementType GetInput(void) {
 		ElementType input;
 		std::cin >> input;
 		while (std::cin.fail()) {
@@ -44,8 +44,10 @@ public:
 	Answer RewriteAsk(std::string path);
 
 	Answer RepeatAsk(void);
+
+	static Answer Ask(void);
 private:
-	bool isAnswerCorrect(Answer input);
+	static bool isAnswerCorrect(Answer input);
 
 	bool isInputTypeCorrect(InputType input);
 };
