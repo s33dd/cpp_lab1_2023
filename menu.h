@@ -21,7 +21,7 @@ public:
 		ElementType input;
 		std::cin >> input;
 		while (std::cin.fail()) {
-			std::cout << "Input: " << std::endl;
+			std::cout << "Incorrect input!" << std::endl << "Input: ";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			std::cin >> input;
