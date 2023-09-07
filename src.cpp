@@ -30,6 +30,8 @@ int main() {
                         getline(std::cin, path);
                         if (std::filesystem::exists(path)) {
                             isErrors = false;
+                        } else {
+                            std::cout << "File doesn`t exist." << std::endl;
                         }
                     }
                     FileWork inputFile{ path };
