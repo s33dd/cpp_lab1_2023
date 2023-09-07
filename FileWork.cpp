@@ -43,7 +43,7 @@ std::vector<std::string> FileWork::Input() {
 	return text;
 }
 
-void FileWork::Save(std::string data) {
+void FileWork::Save(std::vector<std::string> data) {
 	std::ofstream file;
 	file.open(path);
 	for (auto row : data) {

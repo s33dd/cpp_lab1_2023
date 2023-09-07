@@ -13,7 +13,7 @@ public:
 	static bool NameForbidden(std::string path);
 	static bool IsReadOnly(std::string path);
 	std::vector<std::string> Input();
-	void Save(std::string data);
+	void Save(std::vector<std::string> data);
 	void Rename(std::string newPath);
 private:
 	std::string path;
