@@ -23,7 +23,7 @@ Answer Menu::ModularTestsAsk(void) {
 
 InputType Menu::InputAsk(void) {
 	std::cout << "What type of input you would like to use?" << std::endl;
-	std::cout << "1 — Input from file / 0 — Manual input: ";
+	std::cout << "1 - Input from file / 0 - Manual input: ";
 	InputType choice = static_cast<InputType>(GetInput<int>());
 	while (!isInputTypeCorrect(choice)) {
 		choice = static_cast<InputType>(GetInput<int>());
