@@ -1,10 +1,12 @@
 ﻿#include "menu.h"
 #include "FileWork.h"
+#include <regex>
 
 void ManualInput(std::vector<std::string>& text);
 std::string ltrim(const std::string& s);
 std::string rtrim(const std::string& s);
 std::string trim(const std::string& s);
+bool IsEmpty(std::vector<std::string>& text);
 
 int main() {
     Menu menu{};
@@ -15,6 +17,9 @@ int main() {
     }
     while (!isExit) {
         std::vector<std::string> text;
+        std::vector<std::string> answer;
+
+        const std::regex wordFilter("[a-zA-Z0-9]+");
 
         switch (menu.InputAsk()) {
             case InputType::FILE: {
@@ -38,8 +43,46 @@ int main() {
         }
 
         //Check empty text
+        bool reInputFlag = false;
+        bool keepEmptyFlag = false;
+        if (IsEmpty(text)) {
+            std::cout << "Inputed text is empty. Do you want to keep it?" << std::endl;
+            std::cout << "1 - Yes / 0 - No: ";
+            switch (Menu::Ask()) {
+                case Answer::YES:
+                    keepEmptyFlag = true;
+                    break;
+                case Answer::NO:
+                    reInputFlag = true;
+                    break;
+            }
+        }
+        if (reInputFlag == true) {
+            continue;
+        }
         
         //Make work
+        std::cout << "Inputed text:" << std::endl;
+        for (auto line : text) {
+            std::cout << line << std::endl;
+        }
+        if (keepEmptyFlag == true) {
+            answer.push_back("Average word length: 0");
+        } else {
+            for (int i = 0; i < text.size(); i++) {
+                std::sregex_iterator begin {text[i].begin(), text[i].end(), wordFilter};
+                std::sregex_iterator end {};
+                int wordsCount = std::distance(begin, end);
+                const std::regex removeFilter("[^a-zA-Z0-9]+");
+                std::string filteredLine = std::regex_replace(text[i], removeFilter, "");
+                int result = std::round(static_cast<double>(filteredLine.size()) / wordsCount);
+                answer.push_back("Average word length for line " + std::to_string(i + 1) + ": " + std::to_string(result));
+            }
+        }
+        std::cout << "Result:" << std::endl;
+        for (auto line : answer) {
+            std::cout << line << std::endl;
+        }
 
         //Ask about saves
 
@@ -81,4 +124,19 @@ std::string rtrim(const std::string& s) {
 
 std::string trim(const std::string& s) {
     return rtrim(ltrim(s));
+}
+
+bool IsEmpty(std::vector<std::string>& text) {
+    int count = 0;
+    for (auto line : text) {
+        if (trim(line).empty()) {
+            count++;
+        }
+    }
+    if (count == text.size()) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
