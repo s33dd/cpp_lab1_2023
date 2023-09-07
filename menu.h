@@ -41,7 +41,7 @@ public:
 
 	Answer OutputFileAsk(void);
 
-	Answer RewriteAsk(std::string path);
+	Answer RewriteAsk();
 
 	Answer RepeatAsk(void);
 

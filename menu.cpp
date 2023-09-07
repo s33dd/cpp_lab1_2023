@@ -43,7 +43,7 @@ Answer Menu::OutputFileAsk(void) {
 	return Ask();
 }
 
-Answer Menu::RewriteAsk(std::string path) {
+Answer Menu::RewriteAsk() {
 	std::cout << "Do you want to rewrite file?" << std::endl;
 	std::cout << "1 - Yes / 0 - No: ";
 	return Ask();
