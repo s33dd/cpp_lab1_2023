@@ -19,10 +19,13 @@ int main() {
         std::vector<std::string> text;
         std::vector<std::string> answer;
 
+        bool isFileInput = false;
+
         const std::regex wordFilter("[a-zA-Z0-9]+");
 
         switch (menu.InputAsk()) {
             case InputType::FILE: {
+                    isFileInput = true;
                     std::string path;
                     bool isErrors = true;
                     while (isErrors) {
@@ -87,8 +90,88 @@ int main() {
         }
 
         //Ask about saves
+        bool isInputSave = false;
+        bool isOutputSave = false;
+        if (!isFileInput) {
+            switch (menu.SaveInputAsk()) {
+                case Answer::YES:
+                    isInputSave = true;
+                    break;
+                case Answer::NO:
+                    break;
+            }
+        }
+        if (isInputSave) {
+            std::string path;
+            bool isErrors = true;
+            bool rewriteFlag = false;
+            while (isErrors) {
+                std::cout << "Input the filename: ";
+                getline(std::cin, path);
+                if (FileWork::NameForbidden(path)) {
+                    std::cout << "Invalid filename." << std::endl;
+                    continue;
+                }
+                if (std::filesystem::exists(path)) {
+                    switch (menu.RewriteAsk()) {
+                        case Answer::NO:
+                            rewriteFlag = false;
+                            break;
+                        case Answer::YES:
+                            rewriteFlag = true;
+                            break;
+                    }
+                }
+                if (rewriteFlag == false) {
+                    continue;
+                }
+                if (rewriteFlag == true and FileWork::IsReadOnly(path)) {
+                    std::cout << "The file is readonly." << std::endl;
+                    continue;
+                }
+                isErrors = false;
+            }
+            FileWork inputSaveFile{ path };
+            inputSaveFile.Save(text);
+        }
 
-        //Rewrite checks
+        switch (menu.OutputFileAsk()) {
+            case Answer::NO:
+                break;
+            case Answer::YES: {
+                std::string path;
+                bool isErrors = true;
+                bool rewriteFlag = false;
+                while (isErrors) {
+                    std::cout << "Input the filename: ";
+                    getline(std::cin, path);
+                    if (FileWork::NameForbidden(path)) {
+                        std::cout << "Invalid filename." << std::endl;
+                        continue;
+                    }
+                    if (std::filesystem::exists(path)) {
+                        switch (menu.RewriteAsk()) {
+                        case Answer::NO:
+                            rewriteFlag = false;
+                            break;
+                        case Answer::YES:
+                            rewriteFlag = true;
+                            break;
+                        }
+                    }
+                    if (rewriteFlag == false) {
+                        continue;
+                    }
+                    if (rewriteFlag == true and FileWork::IsReadOnly(path)) {
+                        std::cout << "The file is readonly." << std::endl;
+                        continue;
+                    }
+                    isErrors = false;
+                }
+                FileWork outputSaveFile{ path };
+                outputSaveFile.Save(answer);
+            }
+        }
 
         if (menu.RepeatAsk() == Answer::YES) {
             isExit = true;
