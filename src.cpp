@@ -77,10 +77,14 @@ int main() {
             for (int i = 0; i < text.size(); i++) {
                 std::sregex_iterator begin {text[i].begin(), text[i].end(), wordFilter};
                 std::sregex_iterator end {};
-                int wordsCount = std::distance(begin, end);
+                __int64 wordsCount = std::distance(begin, end);
+                if (wordsCount == 0) {
+                    answer.push_back("Average word length for line " + std::to_string(i + 1) + ": 0");
+                    continue;
+                }
                 const std::regex removeFilter("[^a-zA-Z0-9]+");
                 std::string filteredLine = std::regex_replace(text[i], removeFilter, "");
-                int result = std::round(static_cast<double>(filteredLine.size()) / wordsCount);
+                int result = static_cast<int>(std::round(static_cast<double>(filteredLine.size()) / wordsCount));
                 answer.push_back("Average word length for line " + std::to_string(i + 1) + ": " + std::to_string(result));
             }
         }
@@ -91,7 +95,6 @@ int main() {
 
         //Ask about saves
         bool isInputSave = false;
-        bool isOutputSave = false;
         if (!isFileInput) {
             switch (menu.SaveInputAsk()) {
                 case Answer::YES:
