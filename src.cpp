@@ -125,7 +125,7 @@ int main() {
                             break;
                     }
                 }
-                if (rewriteFlag == false) {
+                if (std::filesystem::exists(path) and rewriteFlag == false) {
                     continue;
                 }
                 if (rewriteFlag == true and FileWork::IsReadOnly(path)) {
@@ -162,7 +162,7 @@ int main() {
                             break;
                         }
                     }
-                    if (rewriteFlag == false) {
+                    if (std::filesystem::exists(path) and rewriteFlag == false) {
                         continue;
                     }
                     if (rewriteFlag == true and FileWork::IsReadOnly(path)) {

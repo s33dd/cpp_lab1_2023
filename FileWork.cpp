@@ -18,6 +18,9 @@ bool FileWork::NameForbidden(std::string path) {
 }
 
 bool FileWork::IsReadOnly(std::string path) {
+	if (!std::filesystem::exists(path)) {
+		return false;
+	}
 	DWORD attributes = GetFileAttributesA(path.c_str());
 	if (attributes != INVALID_FILE_ATTRIBUTES) {
 		bool isReadOnly = attributes & FILE_ATTRIBUTE_READONLY;
