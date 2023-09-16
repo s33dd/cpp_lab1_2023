@@ -1,5 +1,6 @@
 ﻿#include "menu.h"
 #include "FileWork.h"
+#include "tests.h"
 #include <regex>
 
 void ManualInput(std::vector<std::string>& text);
@@ -13,7 +14,8 @@ int main() {
     menu.StartInformation();
     bool isExit = false;
     if (menu.ModularTestsAsk() == Answer::YES) {
-        //Make tests
+        Tests t;
+        t.MakeTests();
     }
     while (!isExit) {
         std::vector<std::string> text;
